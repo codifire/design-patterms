@@ -22,6 +22,18 @@
     <Filter Include="Source Files\Flyweight">
       <UniqueIdentifier>{bc8d3f28-dbac-45a7-8c1b-77bdcea66708}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Proxy">
+      <UniqueIdentifier>{224ed2b9-e709-49fc-b8de-204565775f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bridge">
+      <UniqueIdentifier>{af8d8ed1-181e-47f2-87e9-198fbf9c5236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Adapter">
+      <UniqueIdentifier>{c65a7612-315e-484d-a1c1-9c3f56b33d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Composite">
+      <UniqueIdentifier>{7a0cb16c-1b1e-4574-b356-fd2187fe03d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -51,6 +63,18 @@
     <ClInclude Include="Flyweight\Flyweight.h">
       <Filter>Source Files\Flyweight</Filter>
     </ClInclude>
+    <ClInclude Include="Proxy\ProxyPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bridge\BridgePattern.h">
+      <Filter>Source Files\Bridge</Filter>
+    </ClInclude>
+    <ClInclude Include="Adapter\Adapter.h">
+      <Filter>Source Files\Adapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Composite\CompositePattern.h">
+      <Filter>Source Files\Composite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -61,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="Observer\ObserverPattern.cpp">
       <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Bridge\BridgePattern.cpp">
+      <Filter>Source Files\Bridge</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Adapter\Adapter.h" />
+    <ClInclude Include="Bridge\BridgePattern.h" />
+    <ClInclude Include="Composite\CompositePattern.h" />
     <ClInclude Include="Delegate\Delegate.h" />
     <ClInclude Include="Delegate\Delegate11.h" />
     <ClInclude Include="Flyweight\Flyweight.h" />
@@ -160,8 +163,10 @@
     <ClInclude Include="Observer\Server.h" />
     <ClInclude Include="Observer\Subject.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Proxy\ProxyPattern.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bridge\BridgePattern.cpp" />
     <ClCompile Include="DesignPatterns.cpp" />
     <ClCompile Include="Observer\ObserverPattern.cpp" />
     <ClCompile Include="pch.cpp">

@@ -16,8 +16,7 @@ int main()
 
 	obs.entry();
 
-	using namespace decorator_pattern;
-	sendData();
+	decorator_pattern::demo();
 
 
     std::cout << "\n"; 

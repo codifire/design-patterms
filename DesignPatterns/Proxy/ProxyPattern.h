@@ -80,7 +80,7 @@ namespace proxy_pattern
 		return file.is_open();
 	}
 
-	// proxy
+	// proxy the access to the object, inherits the same interface as the original object.
 	// LazyFile and File can be used interchangeably
 	class LazyFile: public IFile
 	{
@@ -133,16 +133,4 @@ namespace proxy_pattern
 		File file;
 	};
 
-	class MemoryFile: public IFile
-	{
-	public:
-		explicit MemoryFile(size_t sz = 256)
-		{
-			file.reserve(sz);
-		}
-
-
-
-		std::string file;
-	};
 }

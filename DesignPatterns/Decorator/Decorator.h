@@ -6,43 +6,18 @@
 
 namespace decorator_pattern
 {
-	class Buffer
+	// Intent: Attach additional responsibilities to an object dynamically. Inheritance can become impractical due to explosion of classes needed to be derived from or inherited for various combinations of behaviors.
+	
+	// class defines the interface of a component to which different behaviors can be added on runtime (or which can be decorated)
+	struct IDataSource
 	{
-	public:
-		Buffer(const size_t size = 64 * 1024)
-		{
-			m_buff.reserve(size);
-		}
-
-		size_t read(void* buff, size_t sz, size_t offset)
-		{
-			const size_t ReadSize = std::min(m_buff.size(), sz);
-			memcpy(buff, &m_buff[offset], ReadSize);
-		}
-			
-		void write(const void* buff, size_t sz)
-		{
-			m_buff.append(reinterpret_cast<const char*>(buff), sz);
-		}
-
-		size_t size() const
-		{
-			return m_buff.size();
-		}
-
-	private:
-		std::string m_buff;
-	};
-
-
-	struct DataSource
-	{
-		virtual ~DataSource() {}
+		virtual ~IDataSource() {}
 		virtual size_t read(void* buff, size_t sz) = 0;
 		virtual size_t write(const void* buff, size_t sz) = 0;
 	};
 
-	struct FileDataSource : public DataSource
+	// concrete class to which behaviors can be added dynamically
+	struct FileDataSource : public IDataSource
 	{
 		FileDataSource(std::string) {}
 		size_t read(void*, size_t) override 
@@ -57,7 +32,8 @@ namespace decorator_pattern
 		}
 	};
 
-	struct TCPSocketDataSource : public DataSource
+	// concrete class which can be decorated
+	struct TCPSocketDataSource : public IDataSource
 	{
 		TCPSocketDataSource(short) {}
 		size_t read(void*, size_t) override 
@@ -72,10 +48,12 @@ namespace decorator_pattern
 		}
 	};
 
-	class DataSourceDecorators : public DataSource
+	// interface for the classes used to decorate the components (or adding the responsibilities to the component
+	// looks like a proxy; derived from the same interface which it maintains a reference to. decorators can decorate other decorators
+	class IDataSourceDecorators : public IDataSource
 	{
 	public:
-		DataSourceDecorators(DataSource* _source) : m_dataSource(_source)
+		IDataSourceDecorators(IDataSource* _source) : m_dataSource(_source)
 		{}
 
 		size_t read(void* buff, size_t sz) override 
@@ -88,20 +66,21 @@ namespace decorator_pattern
 		}
 
 	private:
-		DataSource* m_dataSource;
+		IDataSource* m_dataSource; // component to be decorated
 	};
 
-	class DataCompressionDecorator: public DataSourceDecorators
+	// a concrete decorator that compresses/uncompresses data before/after writing/reading correspondingly.
+	class DataCompressionDecorator: public IDataSourceDecorators
 	{
 	public:
-		DataCompressionDecorator(DataSource* _source, std::string _algorithm)
-			: DataSourceDecorators(_source)
+		DataCompressionDecorator(IDataSource* _source, std::string _algorithm)
+			: IDataSourceDecorators(_source)
 
 		{}
 
 		size_t read(void* buff, size_t sz) override
 		{
-			auto newsz = DataSourceDecorators::read(buff, sz);
+			auto newsz = IDataSourceDecorators::read(buff, sz);
 			std::cout << "un-compressing data with alg: " << m_algorithm << std::endl;
 			// newsz = size after uncompressing
 			return newsz;
@@ -110,24 +89,25 @@ namespace decorator_pattern
 		size_t write(const void* buff, size_t sz) override
 		{
 			std::cout << "compressing data with alg: " << m_algorithm << std::endl;
-			return DataSourceDecorators::write(buff, sz);
+			return IDataSourceDecorators::write(buff, sz);
 		}
 
 	private:
 		std::string m_algorithm;
 	};
 
-	class DataEncryptionDecorator : public DataSourceDecorators
+	// a concrete decorator that encrypts/decrypts data before/after writing/reading correspondingly.
+	class DataEncryptionDecorator : public IDataSourceDecorators
 	{
 	public:
-		DataEncryptionDecorator(DataSource* _source, std::string _algorithm)
-			: DataSourceDecorators(_source)
+		DataEncryptionDecorator(IDataSource* _source, std::string _algorithm)
+			: IDataSourceDecorators(_source)
 
 		{}
 
 		size_t read(void* buff, size_t sz) override
 		{
-			auto newsz = DataSourceDecorators::read(buff, sz);
+			auto newsz = IDataSourceDecorators::read(buff, sz);
 			std::cout << "decrypting data with alg: " << m_algorithm << std::endl;
 			return newsz;
 		}
@@ -135,18 +115,18 @@ namespace decorator_pattern
 		size_t write(const void* buff, size_t sz) override
 		{
 			std::cout << "encrypting data with alg: " << m_algorithm << std::endl;
-			return DataSourceDecorators::write(buff, sz);
+			return IDataSourceDecorators::write(buff, sz);
 		}
 
 	private:
 		std::string m_algorithm;
 	};
 	
-	void sendData()
+	void demo()
 	{
 		std::cout << std::endl;
 
-		DataSource* filePtr = new FileDataSource("data.txt");
+		IDataSource* filePtr = new FileDataSource("data.txt");
 		filePtr = new DataCompressionDecorator(filePtr, std::string("zip"));
 		filePtr = new DataEncryptionDecorator(filePtr, std::string("AES"));
 		
@@ -161,7 +141,7 @@ namespace decorator_pattern
 
 		std::cout << std::endl;
 
-		DataSource* sockPtr = new TCPSocketDataSource(8080);
+		IDataSource* sockPtr = new TCPSocketDataSource(8080);
 		sockPtr = new DataCompressionDecorator(sockPtr, std::string("zip"));
 		sockPtr = new DataEncryptionDecorator(sockPtr, std::string("AES"));
 		sockPtr->write(buff, sizeof(buff));

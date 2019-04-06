@@ -34,11 +34,11 @@
     <Filter Include="Source Files\Composite">
       <UniqueIdentifier>{7a0cb16c-1b1e-4574-b356-fd2187fe03d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Decorator">
+      <UniqueIdentifier>{b7b30869-b1d8-4aca-9d3d-3a40b25e5157}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Observer\Server.h">
       <Filter>Source Files\Observer</Filter>
     </ClInclude>
@@ -63,9 +63,6 @@
     <ClInclude Include="Flyweight\Flyweight.h">
       <Filter>Source Files\Flyweight</Filter>
     </ClInclude>
-    <ClInclude Include="Proxy\ProxyPattern.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Bridge\BridgePattern.h">
       <Filter>Source Files\Bridge</Filter>
     </ClInclude>
@@ -75,11 +72,14 @@
     <ClInclude Include="Composite\CompositePattern.h">
       <Filter>Source Files\Composite</Filter>
     </ClInclude>
+    <ClInclude Include="Decorator\Decorator.h">
+      <Filter>Source Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Proxy\ProxyPattern.h">
+      <Filter>Source Files\Proxy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DesignPatterns.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

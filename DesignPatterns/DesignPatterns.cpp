@@ -8,12 +8,17 @@
 #include "Delegate/Delegate.h"
 #include "Observer/ObserverPattern.h"
 
+#include "Decorator/Decorator.h"
 
 int main()
 {
 	ObserverPattern obs;
 
 	obs.entry();
+
+	using namespace decorator_pattern;
+	sendData();
+
 
     std::cout << "\n"; 
 	system("pause");
